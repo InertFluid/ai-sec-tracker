@@ -1,0 +1,45 @@
+name: AI Security Digest
+
+on:
+  schedule:
+    # Daily at 07:00 UTC (12:30 IST). Adjust if you want.
+    - cron: '0 7 * * *'
+  workflow_dispatch:  # allow manual runs from the Actions tab
+
+permissions:
+  contents: write  # needed to commit updated state.json
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run digest
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}  # optional
+        run: python main.py
+
+      - name: Commit state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain state.json)" ]]; then
+            git add state.json
+            git commit -m "chore: update digest state [skip ci]"
+            git push
+          else
+            echo "No state changes."
+          fi
