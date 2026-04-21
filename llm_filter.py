@@ -24,7 +24,7 @@ SYSTEM_PROMPT = """You are filtering security findings for a daily digest focuse
 
 For each finding, decide:
   keep: true if the item is genuinely about AI, LLMs, agents, ML infrastructure, prompt injection, model security, vector stores, agent frameworks (LangChain, LlamaIndex, AutoGen, CrewAI, MCP, etc.), or vulnerabilities in AI/ML tooling. false if the keyword match was coincidental (e.g. a CVE that happens to contain "ray" or "openai" in its text but is about unrelated software like project-management tools, OSINT tools, chat UIs with no AI focus, etc.).
-  summary: one crisp sentence (max 160 chars) describing what it actually is. Plain prose, no markdown.
+  summary: one crisp sentence (max 160 chars) describing what the item is AND which product/project it affects. Bad: "Server-side request forgery vulnerability." Good: "SSRF in modelscope agentscope's OpenAI tool parser allows fetching arbitrary URLs." Always name the affected software by name. Plain prose, no markdown.
 
 Respond with a JSON object of the form: {"items": [{"idx": 0, "keep": true, "summary": "..."}, ...]} — one entry per input item, preserving idx."""
 
@@ -60,11 +60,16 @@ def filter_and_rewrite(findings: list[Finding]) -> list[Finding]:
     if not findings:
         return findings
 
-    kept: list[Finding] = []
+    # Releases (changelogs) are already structured — the LLM has nothing
+    # useful to add and tends to collapse them into tautologies.
+    to_process = [f for f in findings if f.category != "release"]
+    passthrough = [f for f in findings if f.category == "release"]
+
+    kept: list[Finding] = list(passthrough)
     dropped = 0
 
-    for start in range(0, len(findings), BATCH_SIZE):
-        batch_findings = findings[start : start + BATCH_SIZE]
+    for start in range(0, len(to_process), BATCH_SIZE):
+        batch_findings = to_process[start : start + BATCH_SIZE]
         batch_input = [
             {
                 "idx": i,
@@ -97,5 +102,5 @@ def filter_and_rewrite(findings: list[Finding]) -> list[Finding]:
                 f.summary = new_summary
             kept.append(f)
 
-    print(f"[llm] kept {len(kept)}, dropped {dropped} via LLM filter")
+    print(f"[llm] kept {len(kept)} ({len(passthrough)} releases passthrough), dropped {dropped}")
     return kept
