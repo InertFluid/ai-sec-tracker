@@ -86,7 +86,7 @@ def run() -> int:
             for f in sorted(relevant, key=lambda x: x.score, reverse=True)[:15]:
                 fh.write(f"- `{f.score}` [{f.title}]({f.url}) — `{f.source}`\n")
 
-    return 0
+    return 0 if posted else 1
 
 
 if __name__ == "__main__":
