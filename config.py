@@ -71,6 +71,7 @@ TRACKED_REPOS = [
     "huggingface/transformers",
     "protectai/rebuff",
     "NVIDIA/NeMo-Guardrails",
+    "mitre-atlas/atlas-data",  # MITRE ATLAS adversarial threat landscape for AI
 ]
 
 # RSS feeds for security research blogs.
@@ -83,6 +84,8 @@ RSS_FEEDS = [
     ("Trail of Bits", "https://blog.trailofbits.com/feed/"),
     ("Google Project Zero", "https://googleprojectzero.blogspot.com/feeds/posts/default"),
     ("PortSwigger Research", "https://portswigger.net/research/rss"),
+    ("Hugging Face Blog", "https://huggingface.co/blog/feed.xml"),
+    ("Adversa AI", "https://adversa.ai/feed/"),
 ]
 
 # NVD CPE vendor/product substrings to flag as AI/ML relevant.
