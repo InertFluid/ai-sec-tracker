@@ -4,6 +4,25 @@ Automated daily digest of new CVEs, advisories, research papers, framework
 releases, and blog posts relevant to AI and agent security. Runs on GitHub
 Actions (free) and posts to a Discord channel.
 
+## Pipeline
+
+Each run executes:
+
+1. **Fetch** — every source in `sources/` is queried for items published in
+   the last `LOOKBACK_DAYS` (default 2).
+2. **Dedupe** — IDs already in `state.json` are dropped.
+3. **Score** — remaining items are keyword-scored via `core.score_finding`.
+   Items below `MIN_SCORE` drop out. CVEs get a severity-based floor so
+   Criticals/Highs can't be filtered out by a weak keyword score.
+4. **LLM filter (optional)** — if `GROQ_API_KEY` is set, surviving items
+   (excluding releases, which are passed through) go to Groq for a
+   relevance recheck + 1-line summary rewrite. See *LLM filter* below.
+5. **Post** — all kept items are sent to Discord in chunked messages
+   under the 2000-char content limit.
+6. **Persist** — `state.json` is updated *only on successful delivery*,
+   and the workflow exits non-zero if the Discord post fails so failures
+   show up as red X in the Actions UI.
+
 ## Sources
 
 | Source | Category | Fetcher |
@@ -16,7 +35,7 @@ Actions (free) and posts to a Discord channel.
 
 ## Setup
 
-1. **Create a new private GitHub repo** and drop this folder into it.
+1. **Create a new GitHub repo** and drop this folder into it. Public is fine — no secrets live in the code, and public repos get unlimited free Actions minutes.
 2. **Create a Discord webhook** → in your server, open channel settings (gear icon) → *Integrations* → *Webhooks* → *New Webhook* → name it → *Copy Webhook URL*.
 3. **Add secrets** to the repo (Settings → Secrets and variables → Actions):
    - `DISCORD_WEBHOOK_URL` (required)
@@ -41,17 +60,38 @@ All knobs live in `config.py`:
 ```bash
 pip install -r requirements.txt
 export DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
+export GROQ_API_KEY=gsk_...   # optional
 python main.py
 ```
 
-To run without posting to Discord, just don't set the env var — you'll still see
-what *would* have been sent in the console output.
+To run without posting to Discord, just don't set the env var — you'll still
+see what *would* have been sent in the console output. Note that without a
+webhook the run exits non-zero and skips the state update, so nothing gets
+marked "seen".
+
+## LLM filter
+
+When `GROQ_API_KEY` is set, `llm_filter.py` runs between scoring and posting:
+
+- Drops items where the keyword match was coincidental (e.g. a CVE that
+  happens to mention "ray" but is about an unrelated product).
+- Rewrites verbose abstracts / advisory text into one crisp sentence that
+  names the affected product.
+- **Releases bypass the LLM** — their raw changelog bullets are more
+  informative than any rewrite.
+- **Best-effort** — if the API key is missing or a call fails, the affected
+  batch passes through unchanged. The digest always goes out.
+
+Model defaults to `llama-3.3-70b-versatile`; override with the `GROQ_MODEL`
+env var if you want to swap (e.g. to `llama-3.1-8b-instant` for faster, or
+a newer Groq-hosted model).
 
 ## State
 
-`state.json` is committed back to the repo each run. It stores the IDs of
-items already seen so you never get duplicates. It is capped at 2000 IDs to
-prevent unbounded growth.
+`state.json` is committed back to the repo at the end of each run, *but
+only if Discord delivery succeeded*. It stores the IDs of items already
+seen so you never get duplicates. It is capped at 2000 IDs to prevent
+unbounded growth.
 
 ## Extending
 
@@ -63,5 +103,5 @@ prevent unbounded growth.
 
 After a week of digests, review items flagged as low-value and:
 - Lower weights on noisy keywords (e.g. bare `llm` is deliberately weak).
-- Raise `MIN_SCORE` if the Slack channel feels too busy.
+- Raise `MIN_SCORE` if the Discord channel feels too busy.
 - Remove RSS feeds that don't pull their weight.
