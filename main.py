@@ -65,13 +65,15 @@ def run() -> int:
     relevant = [f for f in scored if f.score >= MIN_SCORE]
     print(f"[score] {len(relevant)} above threshold {MIN_SCORE}")
 
-    # Post
-    discord_notifier.post(relevant)
+    # Post. Only persist state if delivery succeeded — otherwise items marked
+    # "seen" would never be delivered on the next run.
+    posted = discord_notifier.post(relevant)
 
-    # Persist: mark ALL fresh items as seen (not just relevant ones)
-    # so we don't re-evaluate them next run.
-    state["seen_ids"] = list(seen.union(f.id for f in fresh))
-    save_state(state)
+    if posted:
+        state["seen_ids"] = list(seen.union(f.id for f in fresh))
+        save_state(state)
+    else:
+        print("[state] post failed; skipping state update")
 
     # In GitHub Actions, write a short summary to the step summary file.
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
