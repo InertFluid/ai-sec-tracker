@@ -10,6 +10,7 @@ from core import Finding, score_finding, iso_now
 from config import MIN_SCORE
 from sources import arxiv_source, nvd_source, github_source, rss_source
 import discord_notifier
+import llm_filter
 
 STATE_PATH = Path(__file__).parent / "state.json"
 # Cap on IDs to keep in state — prevents unbounded growth.
@@ -64,6 +65,10 @@ def run() -> int:
     scored = [score_finding(f) for f in fresh]
     relevant = [f for f in scored if f.score >= MIN_SCORE]
     print(f"[score] {len(relevant)} above threshold {MIN_SCORE}")
+
+    # LLM pass: drop coincidental keyword matches, rewrite summaries to 1-liners.
+    # Best-effort — unchanged on failure or missing GROQ_API_KEY.
+    relevant = llm_filter.filter_and_rewrite(relevant)
 
     # Post. Only persist state if delivery succeeded — otherwise items marked
     # "seen" would never be delivered on the next run.

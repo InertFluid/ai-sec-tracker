@@ -21,6 +21,7 @@ Actions (free) and posts to a Discord channel.
 3. **Add secrets** to the repo (Settings → Secrets and variables → Actions):
    - `DISCORD_WEBHOOK_URL` (required)
    - `NVD_API_KEY` (optional — [request one here](https://nvd.nist.gov/developers/request-an-api-key), raises your rate limit)
+   - `GROQ_API_KEY` (optional — enables an LLM filter that drops coincidental keyword matches and rewrites summaries into 1-liners. Get a free key at [console.groq.com](https://console.groq.com))
    - `GITHUB_TOKEN` is provided automatically by Actions.
 4. **Enable workflow write permissions**: Settings → Actions → General → Workflow permissions → *Read and write*. This lets the workflow commit `state.json` back.
 5. **Test it**: Actions tab → *AI Security Digest* → *Run workflow*.
