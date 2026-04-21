@@ -2,7 +2,7 @@
 
 Automated daily digest of new CVEs, advisories, research papers, framework
 releases, and blog posts relevant to AI and agent security. Runs on GitHub
-Actions (free) and posts to a Slack channel.
+Actions (free) and posts to a Discord channel.
 
 ## Sources
 
@@ -17,9 +17,9 @@ Actions (free) and posts to a Slack channel.
 ## Setup
 
 1. **Create a new private GitHub repo** and drop this folder into it.
-2. **Create a Slack incoming webhook** → Slack → *Apps* → *Incoming Webhooks* → pick a channel → copy the URL.
+2. **Create a Discord webhook** → in your server, open channel settings (gear icon) → *Integrations* → *Webhooks* → *New Webhook* → name it → *Copy Webhook URL*.
 3. **Add secrets** to the repo (Settings → Secrets and variables → Actions):
-   - `SLACK_WEBHOOK_URL` (required)
+   - `DISCORD_WEBHOOK_URL` (required)
    - `NVD_API_KEY` (optional — [request one here](https://nvd.nist.gov/developers/request-an-api-key), raises your rate limit)
    - `GITHUB_TOKEN` is provided automatically by Actions.
 4. **Enable workflow write permissions**: Settings → Actions → General → Workflow permissions → *Read and write*. This lets the workflow commit `state.json` back.
@@ -39,11 +39,11 @@ All knobs live in `config.py`:
 
 ```bash
 pip install -r requirements.txt
-export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+export DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 python main.py
 ```
 
-To run without posting to Slack, just don't set the env var — you'll still see
+To run without posting to Discord, just don't set the env var — you'll still see
 what *would* have been sent in the console output.
 
 ## State
@@ -55,7 +55,7 @@ prevent unbounded growth.
 ## Extending
 
 - **New source?** Add `sources/yoursource.py` exposing `fetch() -> list[Finding]` and register it in `main.py`.
-- **New delivery channel?** Mirror `slack_notifier.py` — e.g. `email_notifier.py` using SMTP or SES — and call it from `main.py`.
+- **New delivery channel?** Mirror `discord_notifier.py` — e.g. `email_notifier.py` using SMTP or SES — and call it from `main.py`.
 - **Per-category thresholds?** Modify `core.score_finding` or the filter in `main.run`.
 
 ## Tuning signal vs noise

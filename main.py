@@ -1,4 +1,4 @@
-"""Main entry point. Runs all fetchers, scores, dedupes, posts to Slack, persists state."""
+"""Main entry point. Runs all fetchers, scores, dedupes, posts to Discord, persists state."""
 from __future__ import annotations
 
 import json
@@ -9,7 +9,7 @@ from pathlib import Path
 from core import Finding, score_finding, iso_now
 from config import MIN_SCORE
 from sources import arxiv_source, nvd_source, github_source, rss_source
-import slack_notifier
+import discord_notifier
 
 STATE_PATH = Path(__file__).parent / "state.json"
 # Cap on IDs to keep in state — prevents unbounded growth.
@@ -66,7 +66,7 @@ def run() -> int:
     print(f"[score] {len(relevant)} above threshold {MIN_SCORE}")
 
     # Post
-    slack_notifier.post(relevant)
+    discord_notifier.post(relevant)
 
     # Persist: mark ALL fresh items as seen (not just relevant ones)
     # so we don't re-evaluate them next run.
@@ -80,7 +80,7 @@ def run() -> int:
             fh.write(f"# AI Security Digest\n\n")
             fh.write(f"- Fetched: **{len(all_findings)}**\n")
             fh.write(f"- New (unseen): **{len(fresh)}**\n")
-            fh.write(f"- Posted to Slack: **{len(relevant)}**\n\n")
+            fh.write(f"- Posted to Discord: **{len(relevant)}**\n\n")
             for f in sorted(relevant, key=lambda x: x.score, reverse=True)[:15]:
                 fh.write(f"- `{f.score}` [{f.title}]({f.url}) — `{f.source}`\n")
 
