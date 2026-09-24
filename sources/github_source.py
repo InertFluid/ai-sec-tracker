@@ -5,8 +5,10 @@ import os
 import requests
 from datetime import datetime, timedelta, timezone
 
-from core import Finding
-from config import TRACKED_REPOS, LOOKBACK_DAYS
+from core import Finding, record_health
+from config import (
+    TRACKED_REPOS, LOOKBACK_DAYS, LAB_GITHUB_ORGS, LAB_REPO_MIN_STARS, LAB_REPO_LOOKBACK_DAYS,
+)
 
 GITHUB_API = "https://api.github.com"
 
@@ -47,8 +49,9 @@ def fetch_advisories() -> list[Finding]:
             )
             r.raise_for_status()
         except Exception as e:
-            print(f"[gh-advisory] {ecosystem} error: {e}")
+            record_health(f"gh-advisory:{ecosystem}", False, str(e))
             continue
+        record_health(f"gh-advisory:{ecosystem}", True, f"{len(r.json())} advisories")
 
         for adv in r.json():
             published = _parse_dt(adv.get("published_at") or "")
@@ -88,8 +91,9 @@ def fetch_releases() -> list[Finding]:
             )
             r.raise_for_status()
         except Exception as e:
-            print(f"[gh-release] {repo} error: {e}")
+            record_health(f"gh-release:{repo}", False, str(e))
             continue
+        record_health(f"gh-release:{repo}", True)
 
         for rel in r.json():
             published = _parse_dt(rel.get("published_at") or "")
@@ -107,8 +111,50 @@ def fetch_releases() -> list[Finding]:
     return findings
 
 
+def fetch_lab_repos() -> list[Finding]:
+    """New public repos from AI lab orgs — model code and tools often land here first.
+
+    Repos under LAB_REPO_MIN_STARS aren't returned (so not marked seen) and are
+    re-checked on later runs while inside LAB_REPO_LOOKBACK_DAYS.
+    """
+    cutoff = datetime.now(timezone.utc) - timedelta(days=LAB_REPO_LOOKBACK_DAYS)
+    findings: list[Finding] = []
+    for org in LAB_GITHUB_ORGS:
+        try:
+            r = requests.get(
+                f"{GITHUB_API}/orgs/{org}/repos",
+                params={"sort": "created", "direction": "desc", "per_page": 10, "type": "public"},
+                headers=_headers(),
+                timeout=20,
+            )
+            r.raise_for_status()
+        except Exception as e:
+            record_health(f"gh-org:{org}", False, str(e))
+            continue
+        record_health(f"gh-org:{org}", True)
+
+        for repo in r.json():
+            created = _parse_dt(repo.get("created_at") or "")
+            stars = repo.get("stargazers_count", 0)
+            if repo.get("fork") or not created or created < cutoff or stars < LAB_REPO_MIN_STARS:
+                continue
+            desc = repo.get("description") or ""
+            findings.append(Finding(
+                source=f"github-org:{org}",
+                category="repo",
+                title=f"New repo {repo.get('full_name')}" + (f": {desc[:120]}" if desc else ""),
+                url=repo.get("html_url", ""),
+                summary=desc[:600],
+                published=repo.get("created_at"),
+                lane="developments",
+                boost=min(stars // 200, 8) + 2,
+                popularity=f"★ {stars:,}",
+            ))
+    return findings
+
+
 def fetch() -> list[Finding]:
-    return fetch_advisories() + fetch_releases()
+    return fetch_advisories() + fetch_releases() + fetch_lab_repos()
 
 
 if __name__ == "__main__":

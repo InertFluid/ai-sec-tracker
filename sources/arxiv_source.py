@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import feedparser
 from datetime import datetime, timedelta, timezone
-from urllib.parse import quote
 
-from core import Finding
+from core import Finding, http_get, record_health
 from config import ARXIV_CATEGORIES, ARXIV_QUERY_TERMS, LOOKBACK_DAYS
 
-ARXIV_API = "http://export.arxiv.org/api/query"
+# Must be https: the http endpoint 301-redirects, and the redirected request
+# was silently returning nothing, so the digest reported 0 papers for weeks.
+ARXIV_API = "https://export.arxiv.org/api/query"
 
 
 def _build_query() -> str:
@@ -17,13 +18,23 @@ def _build_query() -> str:
     return f"({cats}) AND ({terms})"
 
 
-def fetch(max_results: int = 40) -> list[Finding]:
-    query = _build_query()
-    url = (
-        f"{ARXIV_API}?search_query={quote(query)}"
-        f"&sortBy=submittedDate&sortOrder=descending&max_results={max_results}"
-    )
-    parsed = feedparser.parse(url)
+def fetch(max_results: int = 100) -> list[Finding]:
+    params = {
+        "search_query": _build_query(),
+        "sortBy": "submittedDate",
+        "sortOrder": "descending",
+        "max_results": max_results,
+    }
+    try:
+        # arXiv asks API clients to back off on 503; http_get retries with delay.
+        r = http_get(ARXIV_API, params=params, timeout=60, retries=3)
+    except Exception as e:
+        record_health("arxiv", False, str(e))
+        return []
+    parsed = feedparser.parse(r.content)
+    # A successful query for these terms always has results; zero entries
+    # means arXiv returned an error page or throttled us.
+    record_health("arxiv", bool(parsed.entries), f"{len(parsed.entries)} entries")
     cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
 
     findings: list[Finding] = []
@@ -37,9 +48,9 @@ def fetch(max_results: int = 40) -> list[Finding]:
         findings.append(Finding(
             source="arxiv",
             category="paper",
-            title=entry.title.strip().replace("\n", " "),
+            title=" ".join(entry.title.split()),
             url=entry.link,
-            summary=entry.summary.strip().replace("\n", " ")[:600],
+            summary=" ".join(entry.summary.split())[:600],
             published=published.isoformat(),
         ))
     return findings

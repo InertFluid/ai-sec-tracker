@@ -2,13 +2,14 @@
 from __future__ import annotations
 
 import os
-import requests
+import time
 from datetime import datetime, timedelta, timezone
 
-from core import Finding
+from core import Finding, http_get, record_health
 from config import NVD_RELEVANT_TERMS, LOOKBACK_DAYS
 
 NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0"
+PAGE_SIZE = 2000  # NVD maximum
 
 
 def _is_relevant(cve_item: dict) -> tuple[bool, str]:
@@ -49,7 +50,7 @@ def fetch() -> list[Finding]:
     params = {
         "pubStartDate": start.strftime("%Y-%m-%dT%H:%M:%S.000"),
         "pubEndDate": end.strftime("%Y-%m-%dT%H:%M:%S.000"),
-        "resultsPerPage": 200,
+        "resultsPerPage": PAGE_SIZE,
     }
     headers = {}
     # Optional API key increases rate limit from 5 to 50 req / 30s.
@@ -57,16 +58,34 @@ def fetch() -> list[Finding]:
     if api_key:
         headers["apiKey"] = api_key
 
+    # NVD publishes a few hundred CVEs a day, so the window spans several
+    # pages. Without a key the limit is 5 req / 30s, hence the pause.
     findings: list[Finding] = []
-    try:
-        r = requests.get(NVD_API, params=params, headers=headers, timeout=30)
-        r.raise_for_status()
-        data = r.json()
-    except Exception as e:
-        print(f"[nvd] error: {e}")
-        return findings
+    vulns: list[dict] = []
+    total = None
+    start_index = 0
+    failed = False
+    while total is None or start_index < total:
+        try:
+            r = http_get(NVD_API, params={**params, "startIndex": start_index},
+                         headers=headers, timeout=60, retries=3)
+            data = r.json()
+        except Exception as e:
+            record_health("nvd", False, f"page at {start_index}: {e}")
+            failed = True
+            break
+        total = data.get("totalResults", 0)
+        page = data.get("vulnerabilities", [])
+        vulns.extend(page)
+        if not page:
+            break
+        start_index += len(page)
+        if start_index < total:
+            time.sleep(1 if api_key else 6)
+    if not failed:
+        record_health("nvd", True, f"{len(vulns)} CVEs in window")
 
-    for item in data.get("vulnerabilities", []):
+    for item in vulns:
         cve = item.get("cve", {})
         relevant, matched = _is_relevant(cve)
         if not relevant:
