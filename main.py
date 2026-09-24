@@ -253,7 +253,7 @@ def run_weekly(dry_run: bool = False) -> int:
     stats: dict[str, int] = {}
     for h in items:
         key = "developments" if h.get("lane") == "developments" else {
-            "cve": "CVEs", "advisory": "CVEs", "paper": "papers", "release": "releases",
+            "cve": "CVEs", "advisory": "CVEs", "paper": "papers",
         }.get(h.get("category", ""), "research posts")
         stats[key] = stats.get(key, 0) + 1
 

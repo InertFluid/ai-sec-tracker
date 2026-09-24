@@ -1,4 +1,4 @@
-"""Fetch security advisories + releases for tracked GitHub repos."""
+"""Fetch AI-ecosystem security advisories and new repos from AI lab orgs."""
 from __future__ import annotations
 
 import os
@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 
 from core import Finding, record_health
 from config import (
-    TRACKED_REPOS, LOOKBACK_DAYS, LAB_GITHUB_ORGS, LAB_REPO_MIN_STARS, LAB_REPO_LOOKBACK_DAYS,
+    LOOKBACK_DAYS, LAB_GITHUB_ORGS, LAB_REPO_MIN_STARS, LAB_REPO_LOOKBACK_DAYS,
 )
 
 GITHUB_API = "https://api.github.com"
@@ -78,39 +78,6 @@ def fetch_advisories() -> list[Finding]:
     return findings
 
 
-def fetch_releases() -> list[Finding]:
-    cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
-    findings: list[Finding] = []
-    for repo in TRACKED_REPOS:
-        try:
-            r = requests.get(
-                f"{GITHUB_API}/repos/{repo}/releases",
-                params={"per_page": 5},
-                headers=_headers(),
-                timeout=20,
-            )
-            r.raise_for_status()
-        except Exception as e:
-            record_health(f"gh-release:{repo}", False, str(e))
-            continue
-        record_health(f"gh-release:{repo}", True)
-
-        for rel in r.json():
-            published = _parse_dt(rel.get("published_at") or "")
-            if not published or published < cutoff:
-                continue
-            body = (rel.get("body") or "")[:600]
-            findings.append(Finding(
-                source=f"github-release:{repo}",
-                category="release",
-                title=f"{repo} {rel.get('tag_name', '')}: {rel.get('name', '') or ''}".strip(),
-                url=rel.get("html_url", ""),
-                summary=body,
-                published=rel.get("published_at"),
-            ))
-    return findings
-
-
 def fetch_lab_repos() -> list[Finding]:
     """New public repos from AI lab orgs — model code and tools often land here first.
 
@@ -154,7 +121,7 @@ def fetch_lab_repos() -> list[Finding]:
 
 
 def fetch() -> list[Finding]:
-    return fetch_advisories() + fetch_releases() + fetch_lab_repos()
+    return fetch_advisories() + fetch_lab_repos()
 
 
 if __name__ == "__main__":

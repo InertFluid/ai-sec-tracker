@@ -136,16 +136,11 @@ def filter_and_rewrite(findings: list[Finding]) -> list[Finding]:
     if not findings:
         return findings
 
-    # Releases (changelogs) are already structured — the LLM has nothing
-    # useful to add and tends to collapse them into tautologies.
-    to_process = [f for f in findings if f.category != "release"]
-    passthrough = [f for f in findings if f.category == "release"]
-
-    kept: list[Finding] = list(passthrough)
+    kept: list[Finding] = []
     dropped = 0
 
-    for start in range(0, len(to_process), BATCH_SIZE):
-        batch_findings = to_process[start : start + BATCH_SIZE]
+    for start in range(0, len(findings), BATCH_SIZE):
+        batch_findings = findings[start : start + BATCH_SIZE]
         batch_input = [
             {
                 "idx": i,
@@ -180,7 +175,7 @@ def filter_and_rewrite(findings: list[Finding]) -> list[Finding]:
             f.angle = (verdict.get("angle") or "").strip()
             kept.append(f)
 
-    print(f"[llm] security: kept {len(kept)} ({len(passthrough)} releases passthrough), dropped {dropped}")
+    print(f"[llm] security: kept {len(kept)}, dropped {dropped}")
     _record_llm_health()
     return kept
 

@@ -35,7 +35,7 @@ def normalize_url(url: str) -> str:
 class Finding:
     """A single item pulled from any source."""
     source: str              # e.g. "arxiv", "nvd", "hn", "rss:Embrace The Red"
-    category: str            # "paper" | "cve" | "advisory" | "blog" | "release" | "news" | "discussion" | "model" | "repo"
+    category: str            # "paper" | "cve" | "advisory" | "blog" | "news" | "discussion" | "model" | "repo"
     title: str
     url: str
     summary: str = ""

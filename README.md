@@ -1,7 +1,7 @@
 # AI / Agent Security Tracker
 
 Automated daily digest of new AI developments, CVEs, advisories, research
-papers, framework releases, and blog posts relevant to AI and agent security,
+papers, and blog posts relevant to AI and agent security,
 plus a weekly roll-up with suggested research threads. Runs on GitHub
 Actions (free) and posts to a Discord channel.
 
@@ -54,7 +54,7 @@ Each run executes:
 | New repos in AI lab GitHub orgs | Developments | `sources/github_source.py` |
 | arXiv (`cs.CR`, `cs.AI`, `cs.LG`, `cs.CL`) | Security | `sources/arxiv_source.py` |
 | NVD CVE API 2.0 | Security | `sources/nvd_source.py` |
-| GitHub Security Advisories + tracked-repo releases | Security | `sources/github_source.py` |
+| GitHub Security Advisories (AI-ecosystem packages) | Security | `sources/github_source.py` |
 | AI-security research — Embrace The Red, Adversa, OWASP GenAI, Promptfoo, METR, Anthropic Frontier Red Team, Cisco AI | Security (trusted) | `sources/rss_source.py` |
 | AI-security vendors with no RSS — Lakera, Pillar, Zenity, Noma, Mindgard, PromptArmor, Repello, Lasso, SPLX, Straiker, UK AISI | Security (trusted) | `sources/sitemap_source.py` |
 | Security research/news — Trail of Bits, Project Zero, PortSwigger, Unit 42, Wiz, Snyk, GitHub Security Lab, MSRC/Google/AWS security blogs, Talos, BleepingComputer, The Hacker News, Dark Reading, tl;dr sec, … | Security | `sources/rss_source.py` |
@@ -102,7 +102,6 @@ weekly roll-up runs Mondays 04:27 IST.
 All knobs live in `config.py`:
 
 - `KEYWORDS` / `MIN_SCORE` — security-lane scoring.
-- `TRACKED_REPOS` — watched for releases and advisory matches.
 - `SECURITY_FEEDS`, `AI_SECURITY_FEEDS`, `DEVELOPMENT_FEEDS` — RSS feeds per lane.
 - `SITEMAP_WATCHES` — sites without feeds (`include` / `exclude` regexes).
 - `HN_MIN_POINTS`, `REDDIT_SUBS`, `HF_*`, `LAB_GITHUB_ORGS`, `LAB_REPO_MIN_STARS` — developments sources.
@@ -148,8 +147,6 @@ When `GROQ_API_KEY` is set, `llm_filter.py` runs between scoring and posting:
   coverage of the same story, writes a one-line summary, and suggests the
   guard0 angle (what to test, measure, or write about).
 - **Weekly roll-up:** proposes 3–5 research threads from the week's items.
-- **Releases bypass the LLM** — their raw changelog bullets are more
-  informative than any rewrite.
 - **Best-effort** — if the API key is missing or a call fails, the affected
   batch passes through unchanged. The digest always goes out, and failures
   show up under `llm:groq` in source health.

@@ -14,7 +14,6 @@ CATEGORY_META = {
     "advisory": ("🚨", "CVEs / Advisories"),
     "blog": ("✍️", "Research Blogs"),
     "paper": ("📄", "Research Papers"),
-    "release": ("📦", "Framework Releases"),
 }
 
 SEVERITY_EMOJI = {
@@ -39,8 +38,8 @@ def _bucket(f: Finding) -> str:
         return "developments"
     if f.category in ("cve", "advisory"):
         return "cve"
-    if f.category in ("paper", "release"):
-        return f.category
+    if f.category == "paper":
+        return "paper"
     return "blog"  # blogs, trusted research sites, security discussion
 
 
@@ -96,7 +95,7 @@ def build_lines(findings: list[Finding], health_line: str = "") -> list[str]:
         "",
     ]
 
-    for key in ("developments", "cve", "blog", "paper", "release"):
+    for key in ("developments", "cve", "blog", "paper"):
         items = grouped.get(key, [])
         if not items:
             continue

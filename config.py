@@ -82,32 +82,6 @@ ARXIV_QUERY_TERMS = [
     "red teaming",
 ]
 
-# GitHub repos to monitor for releases + security advisories.
-# Format: "owner/repo"
-TRACKED_REPOS = [
-    "langchain-ai/langchain",
-    "langchain-ai/langgraph",
-    "run-llama/llama_index",
-    "microsoft/autogen",
-    "microsoft/agent-framework",
-    "crewAIInc/crewAI",
-    "microsoft/semantic-kernel",
-    "openai/openai-agents-python",
-    "google/adk-python",
-    "pydantic/pydantic-ai",
-    "langflow-ai/langflow",
-    "modelcontextprotocol/servers",
-    "modelcontextprotocol/python-sdk",
-    "anthropics/anthropic-sdk-python",
-    "openai/openai-python",
-    "vllm-project/vllm",
-    "ollama/ollama",
-    "huggingface/transformers",
-    "protectai/rebuff",
-    "NVIDIA/NeMo-Guardrails",
-    "mitre-atlas/atlas-data",  # MITRE ATLAS adversarial threat landscape for AI
-]
-
 # General security blogs/news. Items must clear the keyword threshold.
 SECURITY_FEEDS = [
     ("Simon Willison", "https://simonwillison.net/atom/everything/"),
