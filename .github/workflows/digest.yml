@@ -2,8 +2,13 @@ name: AI Security Digest
 
 on:
   schedule:
-    # Daily at 03:30 UTC (09:00 IST). Adjust if you want.
-    - cron: '30 3 * * *'
+    # Target: digest in Discord before ~07:00 IST (01:30 UTC).
+    # GitHub starts scheduled runs late under load — observed 1-5 hours, and
+    # some days not at all — so the primary run is scheduled far ahead at an
+    # off-peak minute, and a backup run covers for a dropped one. Whichever
+    # runs second sees the digest was already posted and exits.
+    - cron: '17 20 * * *'  # 01:47 IST (primary)
+    - cron: '43 22 * * *'  # 04:13 IST (backup)
   workflow_dispatch:  # allow manual runs from the Actions tab
 
 permissions:
@@ -37,7 +42,14 @@ jobs:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}  # optional
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}  # optional — enables LLM filter
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}  # optional — enables X/Twitter source
-        run: python main.py
+        # Scheduled runs skip if the other cron already delivered today's
+        # digest; manual runs always go out.
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            python main.py --skip-if-posted-within 10
+          else
+            python main.py
+          fi
 
       # Runs even if the digest step failed: source health is saved either way.
       - name: Commit state

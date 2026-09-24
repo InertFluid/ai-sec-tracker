@@ -2,8 +2,9 @@ name: AI Security Weekly Roll-up
 
 on:
   schedule:
-    # Mondays at 04:30 UTC (10:00 IST), after the daily digest.
-    - cron: '30 4 * * 1'
+    # Sundays 22:57 UTC = Mondays 04:27 IST, after the daily digest's runs,
+    # so the roll-up is waiting before the start of the week.
+    - cron: '57 22 * * 0'
   workflow_dispatch:
 
 permissions:

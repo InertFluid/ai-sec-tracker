@@ -5,6 +5,9 @@ Usage:
   python main.py --weekly        weekly roll-up from the last 7 days of posted items
   python main.py --check-health  exit 1 if any source has failed HEALTH_FAIL_STREAK runs in a row
   python main.py --dry-run       print the digest instead of posting; don't touch state.json
+  python main.py --skip-if-posted-within 10
+                                 exit quietly if a digest was delivered in the last 10h
+                                 (lets a backup cron cover for a delayed/dropped one)
 """
 from __future__ import annotations
 
@@ -179,6 +182,7 @@ def run_daily(dry_run: bool = False) -> int:
     posted = discord_notifier.post(to_post, line)
 
     if posted:
+        state["last_posted"] = iso_now()
         state["seen_ids"] = list(seen.union(f.id for f in fresh))
         state["sitemaps"] = sitemap_source.pending_baselines
         append_history(state, to_post)
@@ -282,9 +286,15 @@ def main() -> int:
     parser.add_argument("--weekly", action="store_true")
     parser.add_argument("--check-health", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--skip-if-posted-within", type=float, metavar="HOURS")
     args = parser.parse_args()
     if args.check_health:
         return run_check_health()
+    if args.skip_if_posted_within and not args.weekly:
+        last = parse_dt(load_state().get("last_posted"))
+        if last and datetime.now(timezone.utc) - last < timedelta(hours=args.skip_if_posted_within):
+            print(f"[skip] digest already delivered at {last.isoformat()}; nothing to do")
+            return 0
     if args.weekly:
         return run_weekly(args.dry_run)
     return run_daily(args.dry_run)

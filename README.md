@@ -88,6 +88,15 @@ Notes:
 4. **Enable workflow write permissions**: Settings → Actions → General → Workflow permissions → *Read and write*. This lets the workflow commit `state.json` back.
 5. **Test it**: Actions tab → *AI Security Digest* → *Run workflow*. The weekly roll-up is *AI Security Weekly Roll-up* (Mondays).
 
+### Schedule
+
+The digest targets Discord before ~07:00 IST. GitHub starts scheduled
+workflows late under load (1–5 hours observed on this repo, and some days
+not at all), so `digest.yml` has two crons: a primary at 01:47 IST and a
+backup at 04:13 IST. Scheduled runs use `--skip-if-posted-within 10`, so
+whichever runs second exits without posting. Manual runs always post. The
+weekly roll-up runs Mondays 04:27 IST.
+
 ## Customization
 
 All knobs live in `config.py`:
@@ -120,6 +129,7 @@ To preview without posting or touching `state.json`:
 python main.py --dry-run           # daily digest + per-source health
 python main.py --weekly --dry-run  # weekly roll-up
 python main.py --check-health      # exit 1 if any source is failing
+python main.py --skip-if-posted-within 10  # no-op if a digest went out in the last 10h
 ```
 
 On macOS with the python.org installer, run `Install Certificates.command`
