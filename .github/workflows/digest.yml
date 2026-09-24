@@ -2,12 +2,22 @@ name: AI Security Digest
 
 on:
   schedule:
-    # Daily at 03:30 UTC (09:00 IST). Adjust if you want.
-    - cron: '30 3 * * *'
+    # Target: digest in Discord before ~07:00 IST (01:30 UTC).
+    # GitHub starts scheduled runs late under load — observed 1-5 hours, and
+    # some days not at all — so the primary run is scheduled far ahead at an
+    # off-peak minute, and a backup run covers for a dropped one. Whichever
+    # runs second sees the digest was already posted and exits.
+    - cron: '17 20 * * *'  # 01:47 IST (primary)
+    - cron: '43 22 * * *'  # 04:13 IST (backup)
   workflow_dispatch:  # allow manual runs from the Actions tab
 
 permissions:
   contents: write  # needed to commit updated state.json
+
+# Daily and weekly runs both read state.json; never let them overlap.
+concurrency:
+  group: digest-state
+  cancel-in-progress: false
 
 jobs:
   digest:
@@ -31,9 +41,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}  # optional
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}  # optional — enables LLM filter
-        run: python main.py
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}  # optional — enables X/Twitter source
+        # Scheduled runs skip if the other cron already delivered today's
+        # digest; manual runs always go out.
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            python main.py --skip-if-posted-within 10
+          else
+            python main.py
+          fi
 
+      # Runs even if the digest step failed: source health is saved either way.
       - name: Commit state
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -44,3 +64,9 @@ jobs:
           else
             echo "No state changes."
           fi
+
+      # Turns the run red when a source has been failing for several runs in
+      # a row, so a dead feed can't silently produce "0 items" for weeks.
+      - name: Check source health
+        if: always()
+        run: python main.py --check-health
