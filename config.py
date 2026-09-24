@@ -172,7 +172,7 @@ DEVELOPMENT_FEEDS = [
     ("Ars Technica AI", "https://arstechnica.com/ai/feed/", "press"),
     ("heise", "https://www.heise.de/rss/heise-atom.xml", "press-general"),
     ("404 Media", "https://www.404media.co/rss/", "press-general"),
-    ("Import AI", "https://importai.substack.com/feed", "newsletter"),
+    ("Import AI", "https://jack-clark.net/feed/", "newsletter"),  # substack URL 403s from Actions
     ("Latent Space", "https://www.latent.space/feed", "newsletter"),
     ("Interconnects", "https://www.interconnects.ai/feed", "newsletter"),
 ]

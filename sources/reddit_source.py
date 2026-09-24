@@ -1,16 +1,16 @@
 """Top-of-day posts from AI subreddits via RSS.
 
-Reddit's JSON API now needs OAuth, but the per-subreddit top/.rss feed is
-still public. It carries no vote counts, so rank within the day's top list is
-used as the popularity signal. Reddit sometimes blocks cloud IPs; the health
-check will flag it if GitHub Actions gets refused.
+Reddit's JSON API now needs OAuth, but the top/.rss feed is still public. It
+rate-limits unauthenticated clients hard (a second request within seconds
+gets a 429), so all subreddits are fetched in ONE combined "a+b+c" feed and
+split back out by each entry's subreddit tag. The feed carries no vote
+counts, so rank within the subreddit's slice is the popularity signal.
 """
 from __future__ import annotations
 
 import feedparser
 import html
 import re
-import time
 from datetime import datetime, timedelta, timezone
 
 from core import Finding, http_get, record_health
@@ -20,21 +20,30 @@ _LINK_RE = re.compile(r'<a href="([^"]+)">\[link\]</a>')
 _TAG_RE = re.compile(r"<[^>]+>")
 
 
+def _subreddit(entry) -> str:
+    for tag in entry.get("tags") or []:
+        if tag.get("term"):
+            return tag["term"].lower()
+    return ""
+
+
 def fetch() -> list[Finding]:
+    if not REDDIT_SUBS:
+        return []
+    combined = "+".join(sub for sub, _, _ in REDDIT_SUBS)
+    try:
+        r = http_get(f"https://www.reddit.com/r/{combined}/top/.rss", params={"t": "day", "limit": 100})
+    except Exception as e:
+        record_health("reddit", False, str(e))
+        return []
+    entries = feedparser.parse(r.content).entries
+    record_health("reddit", bool(entries), f"{len(entries)} entries across {len(REDDIT_SUBS)} subs")
+
     cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
     findings: list[Finding] = []
-    for i, (sub, top_n, lane) in enumerate(REDDIT_SUBS):
-        if i:
-            time.sleep(4)  # Reddit rate-limits unauthenticated feed requests aggressively
-        health_name = f"reddit:r/{sub}"
-        try:
-            r = http_get(f"https://www.reddit.com/r/{sub}/top/.rss", params={"t": "day"})
-        except Exception as e:
-            record_health(health_name, False, str(e))
-            continue
-        entries = feedparser.parse(r.content).entries
-        record_health(health_name, bool(entries), f"{len(entries)} entries")
-        for rank, e in enumerate(entries[:top_n], start=1):
+    for sub, top_n, lane in REDDIT_SUBS:
+        mine = [e for e in entries if _subreddit(e) == sub.lower()][:top_n]
+        for rank, e in enumerate(mine, start=1):
             published = e.get("published_parsed") or e.get("updated_parsed")
             if published and datetime(*published[:6], tzinfo=timezone.utc) < cutoff:
                 continue
