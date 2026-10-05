@@ -38,6 +38,7 @@ jobs:
       - name: Run digest
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}  # optional — also post to Slack
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}  # optional
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}  # optional — enables LLM filter

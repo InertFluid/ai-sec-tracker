@@ -3,7 +3,7 @@
 Automated daily digest of new AI developments, CVEs, advisories, research
 papers, and blog posts relevant to AI and agent security,
 plus a weekly roll-up with suggested research threads. Runs on GitHub
-Actions (free) and posts to a Discord channel.
+Actions (free) and posts to a Discord channel and/or a Slack channel.
 
 It is built to support the guard0 research team's rapid-response rotation:
 the **Top AI Developments** section flags major launches (models, agents,
@@ -80,13 +80,26 @@ Notes:
 1. **Create a new GitHub repo** and drop this folder into it. Public is fine — no secrets live in the code, and public repos get unlimited free Actions minutes.
 2. **Create a Discord webhook** → in your server, open channel settings (gear icon) → *Integrations* → *Webhooks* → *New Webhook* → name it → *Copy Webhook URL*.
 3. **Add secrets** to the repo (Settings → Secrets and variables → Actions):
-   - `DISCORD_WEBHOOK_URL` (required)
+   - `DISCORD_WEBHOOK_URL` and/or `SLACK_WEBHOOK_URL` (at least one required — see *Slack* below)
    - `GROQ_API_KEY` (strongly recommended — the LLM filter is what keeps the developments lane down to notable items and adds research angles. Get a free key at [console.groq.com](https://console.groq.com))
    - `NVD_API_KEY` (optional — [request one here](https://nvd.nist.gov/developers/request-an-api-key), raises your rate limit and speeds up NVD pagination)
    - `X_BEARER_TOKEN` (optional — enables the X/Twitter source; requires a paid X API plan)
    - `GITHUB_TOKEN` is provided automatically by Actions.
 4. **Enable workflow write permissions**: Settings → Actions → General → Workflow permissions → *Read and write*. This lets the workflow commit `state.json` back.
 5. **Test it**: Actions tab → *AI Security Digest* → *Run workflow*. The weekly roll-up is *AI Security Weekly Roll-up* (Mondays).
+
+### Slack
+
+To post to Slack (instead of or alongside Discord):
+
+1. Go to [api.slack.com/apps](https://api.slack.com/apps) → *Create New App* → *From scratch* → pick your workspace.
+2. *Incoming Webhooks* → toggle on → *Add New Webhook to Workspace* → choose the channel → *Allow*. (If your workspace restricts app installs, this sends an approval request to a Slack admin.)
+3. Copy the `https://hooks.slack.com/services/...` URL into the `SLACK_WEBHOOK_URL` repo secret.
+
+The digest is rendered in Slack mrkdwn (bold headings, `<url|title>` links,
+link previews off) and split into ~3000-char messages. If one channel fails
+but the other succeeds, items are still marked as seen (so the working
+channel doesn't get repeats) and the run exits non-zero so you notice.
 
 ### Schedule
 
@@ -118,6 +131,7 @@ All knobs live in `config.py`:
 ```bash
 pip install -r requirements.txt
 export DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
+export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...  # optional
 export GROQ_API_KEY=gsk_...   # optional
 python main.py
 ```
@@ -125,7 +139,7 @@ python main.py
 To preview without posting or touching `state.json`:
 
 ```bash
-python main.py --dry-run           # daily digest + per-source health
+python main.py --dry-run           # daily digest (+ Slack format if SLACK_WEBHOOK_URL set) + per-source health
 python main.py --weekly --dry-run  # weekly roll-up
 python main.py --check-health      # exit 1 if any source is failing
 python main.py --skip-if-posted-within 10  # no-op if a digest went out in the last 10h
@@ -192,7 +206,7 @@ failing or stale sources. It does not modify state.
 ## Extending
 
 - **New source?** Add `sources/yoursource.py` exposing `fetch() -> list[Finding]`, call `record_health()` for each endpoint, set `lane="developments"` and a `boost` if it's news rather than security, and register it in `main.py`.
-- **New delivery channel?** Mirror `discord_notifier.py` — e.g. `email_notifier.py` using SMTP or SES — and call it from `main.py`.
+- **New delivery channel?** Mirror `slack_notifier.py` (convert the Discord-markdown lines, expose `post_lines()`), add it to `CHANNELS` in `notify.py` — e.g. `email_notifier.py` using SMTP or SES — and call it from `main.py`.
 - **Per-category thresholds?** Modify `core.score_finding` or the filter in `main.run_daily`.
 
 ## Tuning signal vs noise

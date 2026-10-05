@@ -1,4 +1,4 @@
-"""Main entry point. Runs all fetchers, scores, dedupes, posts to Discord, persists state.
+"""Main entry point. Runs all fetchers, scores, dedupes, posts to Discord/Slack, persists state.
 
 Usage:
   python main.py                 daily digest
@@ -28,6 +28,7 @@ from sources import (
 )
 import discord_notifier
 import llm_filter
+import notify
 
 STATE_PATH = Path(__file__).parent / "state.json"
 # Cap on IDs to keep in state — prevents unbounded growth. The lookback is
@@ -173,13 +174,15 @@ def run_daily(dry_run: bool = False) -> int:
     line = health_line(state)
 
     if dry_run:
-        discord_notifier.post(to_post, line, dry_run=True)
+        notify.post(to_post, line, dry_run=True)
         print_health(state)
         return 0
 
     # Post. Only mark items seen if delivery succeeded — otherwise they'd
-    # never be delivered on the next run. Health is saved either way.
-    posted = discord_notifier.post(to_post, line)
+    # never be delivered on the next run. Health is saved either way. If one
+    # channel failed but another got it, items are still marked seen (to avoid
+    # reposting to the working channel) and the run exits non-zero.
+    posted, all_ok = notify.post(to_post, line)
 
     if posted:
         state["last_posted"] = iso_now()
@@ -191,7 +194,7 @@ def run_daily(dry_run: bool = False) -> int:
     save_state(state)
 
     write_step_summary(all_findings, fresh, to_post, state)
-    return 0 if posted else 1
+    return 0 if posted and all_ok else 1
 
 
 def append_history(state: dict, posted: list[Finding]) -> None:
@@ -216,7 +219,7 @@ def write_step_summary(all_findings, fresh, posted, state) -> None:
         fh.write("# AI Security Digest\n\n")
         fh.write(f"- Fetched: **{len(all_findings)}**\n")
         fh.write(f"- New (unseen): **{len(fresh)}**\n")
-        fh.write(f"- Posted to Discord: **{len(posted)}**\n\n")
+        fh.write(f"- Posted: **{len(posted)}**\n\n")
         for f in sorted(posted, key=lambda x: x.score, reverse=True)[:20]:
             fh.write(f"- `{f.lane[:3]}` `{f.score}` [{f.title}]({f.url}) — `{f.source}`\n")
         health = state.get("health", {})
@@ -263,7 +266,8 @@ def run_weekly(dry_run: bool = False) -> int:
     lines = discord_notifier.build_weekly_lines(
         developments, security, threads, candidates, stats, health_line(state, include_stale=True),
     )
-    return 0 if discord_notifier.post_lines(lines, dry_run=dry_run) else 1
+    posted, all_ok = notify.post_lines(lines, dry_run=dry_run)
+    return 0 if posted and all_ok else 1
 
 
 def run_check_health() -> int:

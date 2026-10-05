@@ -144,6 +144,18 @@ def build_weekly_lines(developments: list[dict], security: list[dict], threads: 
     return lines
 
 
+class WebhookError(Exception):
+    """A webhook rejected a post. The message never contains the webhook URL."""
+
+
+def safe_error(e: Exception) -> str:
+    """Describe a post failure without leaking the webhook URL. requests'
+    exception messages include the request URL (the secret part is the path),
+    and Actions log masking only hides the full secret, so a partial URL in a
+    public repo's logs would expose it."""
+    return str(e) if isinstance(e, WebhookError) else type(e).__name__
+
+
 def chunk_lines(lines: list[str], limit: int = MAX_CONTENT) -> list[str]:
     """Pack lines into messages under the Discord content limit."""
     chunks: list[str] = []
@@ -177,9 +189,10 @@ def post_lines(lines: list[str], dry_run: bool = False) -> bool:
     for i, content in enumerate(chunks):
         try:
             r = requests.post(webhook, json={"content": content}, timeout=15)
-            r.raise_for_status()
+            if not r.ok:
+                raise WebhookError(f"HTTP {r.status_code}: {r.text[:200]}")
         except Exception as e:
-            print(f"[discord] error on chunk {i + 1}/{len(chunks)}: {e}")
+            print(f"[discord] error on chunk {i + 1}/{len(chunks)}: {safe_error(e)}")
             return False
         # Gentle pacing — Discord webhooks rate-limit ~5 req/2s per webhook.
         if i < len(chunks) - 1:
@@ -187,11 +200,3 @@ def post_lines(lines: list[str], dry_run: bool = False) -> bool:
     print(f"[discord] posted {len(chunks)} message(s)")
     return True
 
-
-def post(findings: list[Finding], health_line: str = "", dry_run: bool = False) -> bool:
-    if not findings and not health_line:
-        print("[discord] nothing to post")
-        return True
-    if not findings:
-        return post_lines(["# 🛡️ AI / Agent Security Digest", "_No new items today._", "", health_line], dry_run)
-    return post_lines(build_lines(findings, health_line), dry_run)
