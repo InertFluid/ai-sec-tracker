@@ -4,7 +4,7 @@ Runs after keyword scoring, before posting. Uses Groq's LLM API to:
   1. Security lane: drop items where the keyword match was coincidental and
      rewrite verbose abstracts/advisory text into a single skimmable line.
   2. Developments lane: keep only notable AI developments, merge duplicate
-     coverage of the same story, and suggest a guard0 research angle.
+     coverage of the same story, and suggest a research angle.
   3. Weekly roll-up: propose research threads from the week's items.
 
 Best-effort: if GROQ_API_KEY is unset or the API call fails for any reason,
@@ -28,7 +28,7 @@ GROQ_MODELS = [m for m in [os.environ.get("GROQ_MODEL"), "openai/gpt-oss-120b", 
 BATCH_SIZE = 15
 DEV_BATCH_SIZE = 25
 
-SYSTEM_PROMPT = """You are filtering security findings for a daily digest focused on AI / LLM / agent security, read by the guard0 security research team.
+SYSTEM_PROMPT = """You are filtering security findings for a daily digest focused on AI / LLM / agent security, read by a security research team.
 
 For each finding, decide:
   keep: true if the item is genuinely about AI, LLMs, agents, ML infrastructure, prompt injection, model security, vector stores, agent frameworks (LangChain, LlamaIndex, AutoGen, CrewAI, MCP, etc.), or vulnerabilities in AI/ML tooling. false if the keyword match was coincidental (e.g. a CVE that happens to contain "ray" or "openai" in its text but is about unrelated software like project-management tools, OSINT tools, chat UIs with no AI focus, etc.). Also false for vendor marketing, webinars, event recaps, listicles, and hiring posts with no technical substance.
@@ -37,17 +37,17 @@ For each finding, decide:
 
 Respond with a JSON object of the form: {"items": [{"idx": 0, "keep": true, "summary": "...", "angle": ""}, ...]} — one entry per input item, preserving idx."""
 
-DEV_SYSTEM_PROMPT = """You triage AI industry news for the guard0 security research team. guard0 builds security for AI agents and publishes fast takes (within 72h) on major AI developments, plus deeper research on agent, model, and MCP security.
+DEV_SYSTEM_PROMPT = """You triage AI industry news for a security research team. The team builds security for AI agents and publishes fast takes (within 72h) on major AI developments, plus deeper research on agent, model, and MCP security.
 
 For each item decide:
   keep: true if it is a NOTABLE development someone tracking AI should know about today: a new model or major model version, a major product/agent/coding-agent/framework launch or protocol change, a significant research result, a notable AI incident, outage, leak, or security event, a major AI policy/regulatory move, or a big AI-security funding/acquisition. false for routine marketing, minor feature updates, opinion pieces with no news, tutorials, listicles, customer case studies, and items not really about AI.
   duplicate_of: if this item covers the same story as an earlier item in this batch, the idx of that earlier item; otherwise null.
   summary: one crisp sentence (max 180 chars): what happened and who shipped it. Name the product/model. Plain prose, no markdown.
-  angle: one sentence (max 160 chars) on the guard0 angle — what a security researcher could test, measure, or write about (e.g. new tool-use surface to probe for prompt injection, new agent permissions model, new open-weight model to red-team). Empty string if there is genuinely no security angle.
+  angle: one sentence (max 160 chars) on the security angle — what a security researcher could test, measure, or write about (e.g. new tool-use surface to probe for prompt injection, new agent permissions model, new open-weight model to red-team). Empty string if there is genuinely no security angle.
 
 Respond with a JSON object: {"items": [{"idx": 0, "keep": true, "duplicate_of": null, "summary": "...", "angle": "..."}, ...]} — one entry per input item, preserving idx."""
 
-THREADS_SYSTEM_PROMPT = """You are the research lead for guard0, an AI-agent security company. Its research team publishes fast takes on major AI developments and deeper research (conference talks, papers, data reports) on agent, model, coding-agent, and MCP security.
+THREADS_SYSTEM_PROMPT = """You are the research lead for an AI-agent security research team. The team publishes fast takes on major AI developments and deeper research (conference talks, papers, data reports) on agent, model, coding-agent, and MCP security.
 
 Given this week's digest items, propose 3 to 5 research threads worth pursuing. Prefer threads that connect several items, are timely, and could produce a public artifact (fast take, experiment write-up, or talk). Each thread:
   title: short name (max 80 chars)

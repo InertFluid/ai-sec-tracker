@@ -5,16 +5,16 @@ papers, and blog posts relevant to AI and agent security,
 plus a weekly roll-up with suggested research threads. Runs on GitHub
 Actions (free) and posts to a Discord channel and/or a Slack channel.
 
-It is built to support the guard0 research team's rapid-response rotation:
+It is built to support a security research team's rapid-response rotation:
 the **Top AI Developments** section flags major launches (models, agents,
-frameworks, incidents) on day one, each with a suggested guard0 security
+frameworks, incidents) on day one, each with a suggested security
 angle, so the team can be first with a credible take.
 
 ## Two lanes
 
 | Lane | What it catches | How items are selected |
 |---|---|---|
-| **Developments** | Model launches, lab announcements, trending discussion, new lab repos and models | Source authority + popularity (HN points, Bluesky/X likes, HF likes, GitHub stars). *Not* security keywords, so "Introducing System One Models and Jev" isn't dropped for never saying "prompt injection". The LLM then keeps only notable items, merges duplicate coverage, and suggests a guard0 angle. |
+| **Developments** | Model launches, lab announcements, trending discussion, new lab repos and models | Source authority + popularity (HN points, Bluesky/X likes, HF likes, GitHub stars). *Not* security keywords, so "Introducing System One Models and Jev" isn't dropped for never saying "prompt injection". The LLM then keeps only notable items, merges duplicate coverage, and suggests a research angle. |
 | **Security** | CVEs, advisories, papers, research blogs, AI-security vendor research | Keyword score ≥ `MIN_SCORE` (AI-security sources are trusted and bypass it), then the LLM drops coincidental matches and marketing. |
 
 ## Pipeline
@@ -159,7 +159,7 @@ When `GROQ_API_KEY` is set, `llm_filter.py` runs between scoring and posting:
   product; adds a research angle when there's a clear one.
 - **Developments lane:** keeps only notable developments, merges duplicate
   coverage of the same story, writes a one-line summary, and suggests the
-  guard0 angle (what to test, measure, or write about).
+  research angle (what to test, measure, or write about).
 - **Weekly roll-up:** proposes 3–5 research threads from the week's items.
 - **Best-effort** — if the API key is missing or a call fails, the affected
   batch passes through unchanged. The digest always goes out, and failures

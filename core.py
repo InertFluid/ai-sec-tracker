@@ -48,7 +48,7 @@ class Finding:
     boost: int = 0                    # authority/popularity bonus (developments ranking)
     popularity: str = ""              # human label, e.g. "HN 1,978 pts"
     discussion_url: str = ""          # HN/Reddit/Bluesky thread when url points elsewhere
-    angle: str = ""                   # LLM-suggested guard0 research angle
+    angle: str = ""                   # LLM-suggested research angle
     also_in: list[str] = field(default_factory=list)  # other sources that carried the same URL
 
     @property
