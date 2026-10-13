@@ -4194,749 +4194,749 @@
     "dfa40ae568d5bf56",
     "dd33b24d63183a8c"
   ],
-  "last_run": "2026-10-13T02:06:37Z",
+  "last_run": "2026-10-13T23:45:51Z",
   "health": {
     "arxiv": {
-      "fail_streak": 1,
-      "last_ok": "2026-10-11T23:42:36Z",
-      "detail": "429 Client Error: Unknown Error for url: https://export.arxiv.org/api/query?search_query=%28cat%3Acs.CR+OR+cat%3Acs.AI+OR+cat%3Acs.LG+OR+cat%3Acs.CL%29+AND+%28abs%3A%22prompt+injection%22+OR+abs%3A%22",
+      "fail_streak": 0,
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "100 entries",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "nvd": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "949 CVEs in window",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "2988 CVEs in window",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-advisory:pip": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 advisories",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-advisory:npm": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 advisories",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-advisory:go": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 advisories",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-advisory:rust": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 advisories",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:openai": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:anthropics": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:google-deepmind": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:google-gemini": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:meta-llama": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:facebookresearch": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:mistralai": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:deepseek-ai": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:QwenLM": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:xai-org": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:huggingface": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:modelcontextprotocol": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:allenai": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:moonshotai": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "gh-org:zai-org": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Unit 42": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "15 entries, newest 2026-10-07",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "15 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Simon Willison": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "30 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "30 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Palo Alto Networks": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-01",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:PortSwigger Research": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "40 entries, newest 2026-10-06",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Wiz": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "697 entries, newest 2026-10-07",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Hugging Face Blog": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "876 entries, newest 2026-10-09",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "876 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Legit Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-01",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:GitHub Blog Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "10 entries, newest 2026-10-08",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "10 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Microsoft Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "10 entries, newest 2026-10-01",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "10 entries, newest 2026-10-08",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:GitHub Security Lab": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-01",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:CrowdStrike": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest ?",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Google Security Blog": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "25 entries, newest 2026-04-23",
       "stale": true,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:AWS Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "20 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "20 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Schneier on Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-12",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Cisco Talos": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "15 entries, newest 2026-10-08",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "15 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Trail of Bits": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "20 entries, newest 2026-10-02",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:BleepingComputer": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "15 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "15 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Cloudflare AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "20 entries, newest 2026-10-09",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Snyk": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "1672 entries, newest 2026-10-07",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Adversa AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "50 entries, newest 2026-10-08",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "50 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Embrace The Red": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "232 entries, newest 2026-09-30",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:The Hacker News": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "50 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "50 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:OWASP GenAI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-08",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Dark Reading": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "50 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "50 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Anthropic Frontier Red Team": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "32 entries, newest 2026-10-12",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Google AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "20 entries, newest 2026-10-07",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "20 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Google DeepMind": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "100 entries, newest 2026-10-06",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "100 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Cisco AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "9 entries, newest 2026-10-06",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Promptfoo": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "20 entries, newest 2026-03-12",
       "stale": true,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Qwen": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "44 entries, newest 2025-09-22",
       "stale": true,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:tl;dr sec": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "20 entries, newest 2026-10-08",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Meta AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "88 entries, newest 2026-07-27",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:NVIDIA": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "18 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "18 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Microsoft Research": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-12",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:TechCrunch AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "20 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "20 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:The Verge AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "10 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "10 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:OpenAI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "1287 entries, newest 2026-10-09",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "1288 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Import AI": {
       "fail_streak": 0,
       "detail": "10 entries, newest 2026-10-12",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z",
-      "last_ok": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z",
+      "last_ok": "2026-10-13T23:45:50Z"
     },
     "rss:404 Media": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "15 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "15 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Interconnects": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "20 entries, newest 2026-10-09",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Ars Technica AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "20 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "20 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:The Register AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 entries, newest 2026-10-07",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:heise": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "150 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "151 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Latent Space": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "20 entries, newest 2026-10-12",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "20 entries, newest 2026-10-13",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:METR": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "104 entries, newest 2026-10-06",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "105 entries, newest 2026-10-06",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "rss:Google Project Zero": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "10 entries, newest 2026-10-06",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Pillar Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "132 pages, 1 new",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "135 pages, 3 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Lakera": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "91 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Anthropic": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "459 pages, 2 new",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "460 pages, 1 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:xAI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "86 pages, 1 new",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "86 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:UK AISI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "163 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Noma Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "97 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Mindgard": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "163 pages, 0 new",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "164 pages, 1 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Mistral AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "89 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Lasso Security": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "115 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Repello AI": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "154 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:SPLX": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "74 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Straiker": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "103 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:PromptArmor": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "60 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "sitemap:Zenity": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "205 pages, 0 new",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "hn": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "54 stories >= 150 pts",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "64 stories >= 150 pts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:natolambert.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "49 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:hardmaru.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "26 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:emollick.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:timkellogg.me": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:simonwillison.net": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "37 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:minimaxir.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "37 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:melaniemitchell.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "41 posts",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "40 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:mmitchell.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "23 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:garymarcus.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "18 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:hamel.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "23 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:yoavgo.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "49 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:willknight.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "24 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:ai2.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "48 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:unsloth.ai": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:pytorch.org": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "49 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:swiftonsecurity.com": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "37 posts",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "35 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:caseynewton.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "36 posts",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "35 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:danielmiessler.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "48 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:thezdi.bsky.social": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:owasp.org": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "41 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "bluesky:wiz.io": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "50 posts",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "huggingface": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
+      "last_ok": "2026-10-13T23:45:50Z",
       "detail": "30 trending models",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "llm:groq": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "7/7 calls ok, model openai/gpt-oss-120b",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "5/5 calls ok, model openai/gpt-oss-120b",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     },
     "reddit": {
       "fail_streak": 0,
-      "last_ok": "2026-10-13T02:06:33Z",
-      "detail": "65 entries across 3 subs",
+      "last_ok": "2026-10-13T23:45:50Z",
+      "detail": "71 entries across 3 subs",
       "stale": false,
-      "last_run": "2026-10-13T02:06:33Z"
+      "last_run": "2026-10-13T23:45:50Z"
     }
   },
   "sitemaps": {
